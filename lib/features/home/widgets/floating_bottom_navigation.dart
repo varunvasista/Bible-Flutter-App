@@ -32,7 +32,7 @@ class FloatingBottomNavigation extends StatelessWidget {
       _NavigationItemData(
         icon: Icons.music_note,
         activeIcon: Icons.music_note_rounded,
-        label: 'Hymns',
+        label: 'Hymnals',
       ),
       _NavigationItemData(
         icon: Icons.person_outline_rounded,
