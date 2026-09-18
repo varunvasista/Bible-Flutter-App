@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:bible_app/features/hymns/screens/hymns_details_screen.dart';
+import 'package:bible_app/features/hymns/screens/hymns_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -38,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late GlobalKey<NavigatorState> _todayNavKey;
   late GlobalKey<NavigatorState> _bibleNavKey;
   late GlobalKey<NavigatorState> _journalNavKey;
+  late GlobalKey<NavigatorState> _hymnsNavKey;
   late GlobalKey<NavigatorState> _profileNavKey;
 
   @override
@@ -55,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _todayNavKey = GlobalKey<NavigatorState>();
     _bibleNavKey = GlobalKey<NavigatorState>();
     _journalNavKey = GlobalKey<NavigatorState>();
+    _hymnsNavKey = GlobalKey<NavigatorState>();
     _profileNavKey = GlobalKey<NavigatorState>();
   }
 
@@ -128,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _todayNavKey,
       _bibleNavKey,
       _journalNavKey,
+      _hymnsNavKey,
       _profileNavKey,
     ];
     final innerNav = keys[_currentIndex].currentState;
@@ -266,6 +271,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         _TabNavigator(
                           navigatorKey: _journalNavKey,
                           builder: () => const JournalScreen(),
+                        ),
+                        _TabNavigator(
+                          navigatorKey: _hymnsNavKey,
+                          builder: () => HymnListScreen(
+                            onHymnSelected: (hymn) {
+                              _hymnsNavKey.currentState?.push(
+                                MaterialPageRoute(
+                                  builder: (_) => HymnDetailScreen(
+                                    hymn: hymn,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                         _TabNavigator(
                           navigatorKey: _profileNavKey,

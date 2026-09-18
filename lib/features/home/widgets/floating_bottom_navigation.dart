@@ -30,6 +30,11 @@ class FloatingBottomNavigation extends StatelessWidget {
         label: 'Notes',
       ),
       _NavigationItemData(
+        icon: Icons.music_note,
+        activeIcon: Icons.music_note_rounded,
+        label: 'Hymns',
+      ),
+      _NavigationItemData(
         icon: Icons.person_outline_rounded,
         activeIcon: Icons.person_rounded,
         label: 'Profile',
@@ -42,7 +47,9 @@ class FloatingBottomNavigation extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardTheme.color,
         borderRadius: BorderRadius.circular(34),
-        border: Border.all(color: isDark ? AppColors.kyrieDarkGrey : AppColors.border, width: 1),
+        border: Border.all(
+            color: isDark ? AppColors.kyrieDarkGrey : AppColors.border,
+            width: 1),
         boxShadow: [
           BoxShadow(
             color: AppColors.black.withOpacity(0.06),
@@ -74,7 +81,9 @@ class FloatingBottomNavigation extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? (isDark ? AppColors.darkGray : AppColors.borderLight)
+                            ? (isDark
+                                ? AppColors.darkGray
+                                : AppColors.borderLight)
                             : AppColors.transparent,
                         borderRadius: BorderRadius.circular(14),
                       ),
