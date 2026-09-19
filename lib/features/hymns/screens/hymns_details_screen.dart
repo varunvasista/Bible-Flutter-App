@@ -157,100 +157,132 @@ Future<void> _shareHymn() async {
         // BODY
         // ========================================================
 
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(
-            28,
-            8,
-            30,
-            30,
-          ),
-          children: [
-            // ======================================================
-            // TITLE + ACTIONS
-            // ======================================================
-
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Text(
-                    '${widget.hymn.number.toString().padLeft(3, '0')} - '
-                    '${widget.hymn.title}',
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 42.0),
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(
+              28,
+              8,
+              30,
+              30,
+            ),
+            children: [
+              // ======================================================
+              // TITLE + ACTIONS
+              // ======================================================
+          
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${widget.hymn.number.toString().padLeft(3, '0')} - '
+                      '${widget.hymn.title}',
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-
-                // FAVORITE
-                IconButton(
-                  onPressed: _toggleFavorite,
-                  icon: Icon(
-                    isFavorite ? Icons.star : Icons.star_border,
-                    color: Colors.black,
-                    size: 28,
+          
+                  // FAVORITE
+                  IconButton(
+                    onPressed: _toggleFavorite,
+                    icon: Icon(
+                      isFavorite ? Icons.star : Icons.star_border,
+                      color: Colors.black,
+                      size: 28,
+                    ),
                   ),
-                ),
-
-                // SHARE
-                IconButton(
-                  onPressed: _shareHymn,
-                  icon: const Icon(
-                    Icons.share,
-                    color: Colors.black,
-                    size: 25,
+          
+                  // SHARE
+                  IconButton(
+                    onPressed: _shareHymn,
+                    icon: const Icon(
+                      Icons.share,
+                      color: Colors.black,
+                      size: 25,
+                    ),
                   ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
-            // ======================================================
-            // LARGE TITLE
-            // ======================================================
-
-            Text(
-              '${widget.hymn.number.toString().padLeft(3, '0')} - '
-              '${widget.hymn.title}',
-              textAlign: TextAlign.start,
-              softWrap: true,
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+                ],
               ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // ======================================================
-            // SECTIONS
-            // ======================================================
-
-            ...widget.hymn.sections.map((section) {
-              // CHORUS
-              if (section.type == 'chorus') {
+          
+              const SizedBox(height: 20),
+          
+              // ======================================================
+              // LARGE TITLE
+              // ======================================================
+          
+              Text(
+                '${widget.hymn.number.toString().padLeft(3, '0')} - '
+                '${widget.hymn.title}',
+                textAlign: TextAlign.start,
+                softWrap: true,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+          
+              const SizedBox(height: 20),
+          
+              // ======================================================
+              // SECTIONS
+              // ======================================================
+          
+              ...widget.hymn.sections.map((section) {
+                // CHORUS
+                if (section.type == 'chorus') {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      top: 16,
+                      bottom: 14,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'CHORUS:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          section.lyrics,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            height: 1.35,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+          
+                // VERSE
                 return Padding(
                   padding: const EdgeInsets.only(
-                    top: 16,
-                    bottom: 14,
+                    top: 2,
+                    bottom: 20,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'CHORUS:',
-                        style: TextStyle(
+                      Text(
+                        '${section.verseNumber}',
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 2),
                       Text(
                         section.lyrics,
                         style: const TextStyle(
@@ -262,38 +294,9 @@ Future<void> _shareHymn() async {
                     ],
                   ),
                 );
-              }
-
-              // VERSE
-              return Padding(
-                padding: const EdgeInsets.only(
-                  top: 2,
-                  bottom: 10,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${section.verseNumber}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      section.lyrics,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        height: 1.35,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ],
+              }),
+            ],
+          ),
         ),
       ),
     );
