@@ -1,5 +1,3 @@
-
-
 import 'package:bible_app/features/hymns/database/hymn_database.dart';
 import 'package:bible_app/features/hymns/models/hymn.dart';
 import 'package:bible_app/features/hymns/repositories/hymn_repository.dart';
@@ -21,14 +19,14 @@ class HymnListScreen extends StatefulWidget {
 class _HymnListScreenState extends State<HymnListScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-late final HymnRepository _repository;
+  late final HymnRepository _repository;
 
   List<Hymn> _hymns = [];
   String _searchText = '';
   bool _isLoading = true;
   String? _error;
 
- @override
+  @override
   void initState() {
     super.initState();
 
@@ -45,7 +43,7 @@ late final HymnRepository _repository;
     _loadHymns();
   }
 
-Future<void> _loadHymns() async {
+  Future<void> _loadHymns() async {
     try {
       // First import JSON data into SQLite.
       await _repository.importHymnsFromJson();
@@ -70,6 +68,7 @@ Future<void> _loadHymns() async {
       });
     }
   }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -95,8 +94,7 @@ Future<void> _loadHymns() async {
 
     return Scaffold(
       backgroundColor: Colors.white,
-
-  appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
         scrolledUnderElevation: 0,
@@ -129,8 +127,10 @@ Future<void> _loadHymns() async {
           const SizedBox(width: 4),
         ],
       ),
-
-      body: _buildBody(filteredHymns),
+    body: SafeArea(
+        bottom: true,
+        child: _buildBody(filteredHymns),
+      ),
     );
   }
 
@@ -194,6 +194,7 @@ Future<void> _loadHymns() async {
                 )
               : ListView.separated(
                   itemCount: filteredHymns.length,
+                  padding: const EdgeInsets.only(bottom: 120),
                   separatorBuilder: (context, index) {
                     return const Divider(
                       height: 1,

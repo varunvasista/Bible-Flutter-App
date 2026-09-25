@@ -132,7 +132,10 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
           },
         ),
       ),
-      body: _buildBody(),
+  body: SafeArea(
+        bottom: true,
+        child: _buildBody(),
+      ),
     );
   }
 
@@ -179,6 +182,7 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
           : ListView.separated(
               physics: const AlwaysScrollableScrollPhysics(),
               itemCount: _favorites.length,
+                padding: const EdgeInsets.only(bottom: 120),
               separatorBuilder: (context, index) {
                 return const Divider(
                   height: 1,

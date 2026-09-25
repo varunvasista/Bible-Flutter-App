@@ -157,14 +157,14 @@ Future<void> _shareHymn() async {
         // BODY
         // ========================================================
 
-        body: Padding(
-          padding: const EdgeInsets.only(bottom: 42.0),
+        body: SafeArea(
+          bottom: true,
           child: ListView(
             padding: const EdgeInsets.fromLTRB(
               28,
               8,
               30,
-              30,
+              100,
             ),
             children: [
               // ======================================================
