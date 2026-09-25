@@ -1,3 +1,4 @@
+import 'package:bible_app/core/theme/app_colors.dart';
 import 'package:bible_app/features/hymns/database/hymn_database.dart';
 import 'package:bible_app/features/hymns/models/hymn.dart';
 import 'package:bible_app/features/hymns/repositories/hymn_repository.dart';
@@ -93,17 +94,17 @@ class _HymnListScreenState extends State<HymnListScreen> {
     final filteredHymns = _filterHymns();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: AppColors.background,
+        surfaceTintColor: AppColors.transparent,
         scrolledUnderElevation: 0,
         elevation: 0,
         centerTitle: true,
         title: const Text(
           'SDA Hymnal',
           style: TextStyle(
-            color: Colors.black,
+            color: AppColors.primary,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -112,7 +113,7 @@ class _HymnListScreenState extends State<HymnListScreen> {
           IconButton(
             icon: const Icon(
               Icons.star_border,
-              color: Colors.black,
+              color: AppColors.primary,
               size: 27,
             ),
             onPressed: () {
@@ -127,7 +128,7 @@ class _HymnListScreenState extends State<HymnListScreen> {
           const SizedBox(width: 4),
         ],
       ),
-    body: SafeArea(
+      body: SafeArea(
         bottom: true,
         child: _buildBody(filteredHymns),
       ),
@@ -137,7 +138,9 @@ class _HymnListScreenState extends State<HymnListScreen> {
   Widget _buildBody(List<Hymn> filteredHymns) {
     if (_isLoading) {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: AppColors.primary,
+        ),
       );
     }
 
@@ -146,6 +149,10 @@ class _HymnListScreenState extends State<HymnListScreen> {
         child: Text(
           'Error: $_error',
           textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: AppColors.error,
+            fontSize: 14,
+          ),
         ),
       );
     }
@@ -154,21 +161,30 @@ class _HymnListScreenState extends State<HymnListScreen> {
       children: [
         // SEARCH
         Padding(
-          padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
+          padding: const EdgeInsets.fromLTRB(
+            12,
+            4,
+            12,
+            12,
+          ),
           child: TextField(
             controller: _searchController,
+            style: const TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 16,
+            ),
             decoration: InputDecoration(
               hintText: 'Search Hymn',
-              hintStyle: TextStyle(
-                color: Colors.grey.shade500,
+              hintStyle: const TextStyle(
+                color: AppColors.textSecondary,
                 fontSize: 16,
               ),
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.search,
-                color: Colors.grey.shade500,
+                color: AppColors.textSecondary,
               ),
               filled: true,
-              fillColor: const Color(0xffeeeeee),
+              fillColor: AppColors.greyLightest,
               contentPadding: const EdgeInsets.symmetric(
                 vertical: 0,
               ),
@@ -188,18 +204,20 @@ class _HymnListScreenState extends State<HymnListScreen> {
                     'No hymns found',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey,
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 )
               : ListView.separated(
                   itemCount: filteredHymns.length,
-                  padding: const EdgeInsets.only(bottom: 120),
+                  padding: const EdgeInsets.only(
+                    bottom: 120,
+                  ),
                   separatorBuilder: (context, index) {
                     return const Divider(
                       height: 1,
                       thickness: 0.5,
-                      color: Color(0xffeeeeee),
+                      color: AppColors.divider,
                     );
                   },
                   itemBuilder: (context, index) {
@@ -213,12 +231,12 @@ class _HymnListScreenState extends State<HymnListScreen> {
                         '${hymn.number.toString().padLeft(3, '0')} - ${hymn.title}',
                         style: const TextStyle(
                           fontSize: 16,
-                          color: Colors.black87,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       trailing: const Icon(
                         Icons.chevron_right,
-                        color: Colors.grey,
+                        color: AppColors.textSecondary,
                       ),
                       onTap: () {
                         widget.onHymnSelected(hymn);

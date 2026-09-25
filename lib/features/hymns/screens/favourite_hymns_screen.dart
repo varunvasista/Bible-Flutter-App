@@ -1,3 +1,4 @@
+import 'package:bible_app/core/theme/app_colors.dart';
 import 'package:bible_app/features/hymns/database/hymn_database.dart';
 import 'package:bible_app/features/hymns/models/hymn.dart';
 import 'package:bible_app/features/hymns/repositories/hymn_repository.dart';
@@ -106,17 +107,17 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: AppColors.background,
+        surfaceTintColor: AppColors.transparent,
         scrolledUnderElevation: 0,
         elevation: 0,
         centerTitle: true,
         title: const Text(
           'SDA Hymnal',
           style: TextStyle(
-            color: Colors.black,
+            color: AppColors.primary,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -124,7 +125,7 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: AppColors.primary,
             size: 20,
           ),
           onPressed: () {
@@ -132,7 +133,7 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
           },
         ),
       ),
-  body: SafeArea(
+      body: SafeArea(
         bottom: true,
         child: _buildBody(),
       ),
@@ -142,7 +143,9 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
   Widget _buildBody() {
     if (_isLoading) {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: AppColors.primary,
+        ),
       );
     }
 
@@ -151,11 +154,16 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
         child: Text(
           'Error: $_error',
           textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: AppColors.error,
+            fontSize: 14,
+          ),
         ),
       );
     }
 
     return RefreshIndicator(
+      color: AppColors.primary,
       onRefresh: _refreshFavorites,
       child: _favorites.isEmpty
           ? LayoutBuilder(
@@ -170,7 +178,7 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
                           'No favorite hymns',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.grey,
+                            color: AppColors.textSecondary,
                           ),
                         ),
                       ),
@@ -182,12 +190,14 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
           : ListView.separated(
               physics: const AlwaysScrollableScrollPhysics(),
               itemCount: _favorites.length,
-                padding: const EdgeInsets.only(bottom: 120),
+              padding: const EdgeInsets.only(
+                bottom: 120,
+              ),
               separatorBuilder: (context, index) {
                 return const Divider(
                   height: 1,
                   thickness: 0.5,
-                  color: Color(0xffeeeeee),
+                  color: AppColors.greyLightest,
                 );
               },
               itemBuilder: (context, index) {
@@ -202,12 +212,12 @@ class _FavoriteScreenState extends State<FavoriteHymnsScreen> {
                     '${hymn.title}',
                     style: const TextStyle(
                       fontSize: 16,
-                      color: Colors.black87,
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   trailing: const Icon(
                     Icons.chevron_right,
-                    color: Colors.grey,
+                    color: AppColors.textSecondary,
                   ),
                   onTap: () {
                     _openHymn(hymn);

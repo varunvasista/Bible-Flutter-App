@@ -1,3 +1,4 @@
+import 'package:bible_app/core/theme/app_colors.dart';
 import 'package:bible_app/features/hymns/database/hymn_database.dart';
 import 'package:bible_app/features/hymns/models/hymn.dart';
 import 'package:bible_app/features/hymns/repositories/hymn_repository.dart';
@@ -50,12 +51,16 @@ class _HymnDetailScreenState extends State<HymnDetailScreen> {
     }
   }
 
-  // for share the hymns
-Future<void> _shareHymn() async {
+  // ============================================================
+  // SHARE HYMN
+  // ============================================================
+
+  Future<void> _shareHymn() async {
     final buffer = StringBuffer();
 
     buffer.writeln(
-      '${widget.hymn.number.toString().padLeft(3, '0')} - ${widget.hymn.title}',
+      '${widget.hymn.number.toString().padLeft(3, '0')} - '
+      '${widget.hymn.title}',
     );
 
     buffer.writeln();
@@ -77,6 +82,7 @@ Future<void> _shareHymn() async {
       subject: widget.hymn.title,
     );
   }
+
   // ============================================================
   // TOGGLE FAVORITE
   // ============================================================
@@ -106,36 +112,31 @@ Future<void> _shareHymn() async {
   @override
   Widget build(BuildContext context) {
     return PopScope<bool>(
-      // We handle Android/device back ourselves.
       canPop: false,
-
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
           return;
         }
 
-        // This handles Android device back button
-        // and Android back gesture.
         Navigator.of(context).pop(isFavorite);
       },
-
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
 
         // ========================================================
         // APP BAR
         // ========================================================
 
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.transparent,
+          backgroundColor: AppColors.background,
+          surfaceTintColor: AppColors.transparent,
           scrolledUnderElevation: 0,
           elevation: 0,
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
+              color: AppColors.primary,
               size: 20,
             ),
             onPressed: () {
@@ -145,7 +146,7 @@ Future<void> _shareHymn() async {
           title: const Text(
             'SDA Hymnal',
             style: TextStyle(
-              color: Colors.black,
+              color: AppColors.primary,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -167,10 +168,10 @@ Future<void> _shareHymn() async {
               100,
             ),
             children: [
-              // ======================================================
+              // ==================================================
               // TITLE + ACTIONS
-              // ======================================================
-          
+              // ==================================================
+
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -183,39 +184,39 @@ Future<void> _shareHymn() async {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ),
-          
+
                   // FAVORITE
                   IconButton(
                     onPressed: _toggleFavorite,
                     icon: Icon(
                       isFavorite ? Icons.star : Icons.star_border,
-                      color: Colors.black,
+                      color: AppColors.primary,
                       size: 28,
                     ),
                   ),
-          
+
                   // SHARE
                   IconButton(
                     onPressed: _shareHymn,
                     icon: const Icon(
                       Icons.share,
-                      color: Colors.black,
+                      color: AppColors.primary,
                       size: 25,
                     ),
                   ),
                 ],
               ),
-          
+
               const SizedBox(height: 20),
-          
-              // ======================================================
+
+              // ==================================================
               // LARGE TITLE
-              // ======================================================
-          
+              // ==================================================
+
               Text(
                 '${widget.hymn.number.toString().padLeft(3, '0')} - '
                 '${widget.hymn.title}',
@@ -224,18 +225,21 @@ Future<void> _shareHymn() async {
                 style: const TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: AppColors.textPrimary,
                 ),
               ),
-          
+
               const SizedBox(height: 20),
-          
-              // ======================================================
+
+              // ==================================================
               // SECTIONS
-              // ======================================================
-          
+              // ==================================================
+
               ...widget.hymn.sections.map((section) {
+                // =================================================
                 // CHORUS
+                // =================================================
+
                 if (section.type == 'chorus') {
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -250,6 +254,7 @@ Future<void> _shareHymn() async {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -258,15 +263,18 @@ Future<void> _shareHymn() async {
                           style: const TextStyle(
                             fontSize: 14,
                             height: 1.35,
-                            color: Colors.black87,
+                            color: AppColors.textDark,
                           ),
                         ),
                       ],
                     ),
                   );
                 }
-          
+
+                // =================================================
                 // VERSE
+                // =================================================
+
                 return Padding(
                   padding: const EdgeInsets.only(
                     top: 2,
@@ -280,6 +288,7 @@ Future<void> _shareHymn() async {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -288,7 +297,7 @@ Future<void> _shareHymn() async {
                         style: const TextStyle(
                           fontSize: 14,
                           height: 1.35,
-                          color: Colors.black87,
+                          color: AppColors.textDark,
                         ),
                       ),
                     ],
